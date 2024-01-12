@@ -2,47 +2,49 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONString;
 import org.json.JSONTokener;
-
+import javax.swing.*;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+
+        /*JFrame f = new JFrame();
+        JButton b=new JButton("click");
+        b.setBounds(70,50,50, 50);
+        f.add(b);
+
+        f.setSize(200,200);
+        f.setLayout(null);
+        f.setVisible(true);*/
         try {
-            // Specify the path to your HAR file
             String filePath = "HAR/www.stackpath.com.har";
 
-            // Create a FileReader object to read the file
             FileReader fileReader = new FileReader(filePath);
 
-            // Create a JSONTokener to parse the file
             JSONTokener jsonTokener = new JSONTokener(fileReader);
 
-            // Create a JSONObject from the JSONTokener
             JSONObject jsonObject = new JSONObject(jsonTokener);
 
-            // Navigate the JSON structure
             JSONObject log = jsonObject.getJSONObject("log");
             JSONArray entries = log.getJSONArray("entries");
 
-            // Process the entries as needed
-            int count = 0;
-            for (int i = 0; i < entries.length(); i++) {
+            int i;
+            for (i = 0; i < entries.length(); i++) {
                 JSONObject entry = entries.getJSONObject(i);
-                JSONObject x = entry.getJSONObject("request");
-                JSONArray y = x.getJSONArray("headers");
-                JSONObject z = y.getJSONObject(0);
-                JSONObject a = y.getJSONObject(2);
-                Object path = a.get("value");
-                Object domain = z.get("value");
-                System.out.println(domain.toString() + path.toString());
-                Object time = entry.get("startedDateTime");
+                JSONObject requestObj = entry.getJSONObject("request"); // contains full details of request (GET OR POST, headers)
+                JSONArray headersObj = requestObj.getJSONArray("headers"); // contains all headers of the request
+                JSONObject domainObj = headersObj.getJSONObject(0); // contains the authority domain obj in name value format
+                JSONObject pathObj = headersObj.getJSONObject(2); // contains the path obj in name value format
+                Object path = pathObj.get("value");  // path part of the request url
+                Object domain = domainObj.get("value"); // domain part of the request url
+                System.out.println(domain.toString() + path.toString()); // prints the full request URL
+                Object time = entry.get("startedDateTime"); // start time of request
                 System.out.println(time);
-                System.out.println(" ");
-
-                count++;
+                System.out.println();
+                //count++;
             }
-            System.out.println("there are "+ count + " entries");
+            System.out.println("there are "+ i + " entries");
             fileReader.close();
         } catch (Exception e) {
             e.printStackTrace();
