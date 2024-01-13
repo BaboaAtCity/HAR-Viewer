@@ -23,27 +23,28 @@ public class Main {
 
             int i;
             for (i = 0; i < entries.length(); i++) {
-
                 JSONObject entry = entries.getJSONObject(i);
-                JSONObject requestObj = entry.getJSONObject("request"); // contains full details of request (GET OR POST, headers)
-                JSONObject responseObj = entry.getJSONObject("response"); // contains full details of response
-                //JSONArray headersObj = requestObj.getJSONArray("headers"); // contains all headers of the request
-
-                Object methodObj = requestObj.get("method");
-                Object urlObj = requestObj.get("url");
-                Object statusObj = responseObj.get("status");
-                Object time = entry.get("startedDateTime"); // start time of request
-
-                System.out.println(methodObj+ " " + statusObj);
-                System.out.println(urlObj); // prints the full request URL
-                System.out.println(time);
-                System.out.println("entry number: " + i);
-                System.out.println();
+                printEntryDetails(entry, i);
             }
             System.out.println("there are "+ i + " entries");
             fileReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private static void printEntryDetails(JSONObject entry, int entryNumber) {
+        JSONObject requestObj = entry.getJSONObject("request");
+        JSONObject responseObj = entry.getJSONObject("response");
+
+        Object methodObj = requestObj.get("method");
+        Object urlObj = requestObj.get("url");
+        Object statusObj = responseObj.get("status");
+        Object time = entry.get("startedDateTime");
+
+        System.out.println(methodObj + " " + statusObj);
+        System.out.println(urlObj);
+        System.out.println(time);
+        System.out.println("Entry number: " + entryNumber);
+        System.out.println();
     }
 }
