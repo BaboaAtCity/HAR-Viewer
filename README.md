@@ -1,5 +1,5 @@
 ## HAR File Viewer In Java
-This simple Java project serves as a tool for viewing the contents of HAR (HTTP Archive) files, which are commonly used in web development and automation. HAR files capture precise information about a web page's interactions, including requests, responses, and timing metrics. 
+This CLI Java application serves as a tool for viewing the contents of HAR (HTTP Archive) files, which are commonly used in web development and automation. HAR files capture precise information about a web page's interactions, including requests, responses, and timing metrics. 
 
 ___
 
