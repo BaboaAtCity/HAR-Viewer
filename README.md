@@ -21,12 +21,12 @@ The output of this tool is broken down below:
 - Entry Number: The index of the entry with in the entry array
 
 ```
-GET 200
+GET 🟢 200
 https://example.com/resource1
 2023-12-29T14:35:41.093Z
 Entry number: 1
 
-POST 404
+POST 🔴 404
 https://example.com/api/endpoint
 2023-12-29T14:35:41.098Z
 Entry number: 2
